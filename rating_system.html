@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .slider {
+      width: 300px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pro Wrestling Match Rating System</h1>
+  
+  <h2>In-match Evaluation (35%)</h2>
+  
+  <h3>Atmosphere (60%)</h3>
+  <input type="range" class="slider" min="0" max="7" value="0" id="audience-engagement-slider">
+  <label for="audience-engagement-slider">Audience Engagement</label>
+  
+  <input type="range" class="slider" min="0" max="7" value="0" id="pace-control-slider">
+  <label for="pace-control-slider">Pace Control</label>
+  
+  <input type="range" class="slider" min="0" max="7" value="0" id="selling-immersion-slider">
+  <label for="selling-immersion-slider">Selling/Immersion</label>
+  
+  <input type="range" class="slider" min="0" max="7" value="0" id="entertainment-value-slider">
+  <label for="entertainment-value-slider">Entertainment Value</label>
+  
+  <h3>Moves (40%)</h3>
+  <input type="range" class="slider" min="0" max="7" value="0" id="number-of-mistakes-slider">
+  <label for="number-of-mistakes-slider">Number of Mistakes</label>
+  
+  <input type="range" class="slider" min="0" max="7" value="0" id="chemistry-slider">
+  <label for="chemistry-slider">Chemistry Between Participants</label>
+  
+  <input type="range" class="slider" min="0" max="7" value="0" id="high-points-slider">
+  <label for="high-points-slider">High Points/Counter Moves</label>
+  
+  <input type="range" class="slider" min="0" max="7" value="0" id="gimmicks-slider">
+  <label for="gimmicks-slider">Integration of Gimmicks</label>
+  
+  <h2>Storyline Evaluation (25%)</h2>
+  
+  <h3>Pre-match buildup (60%)</h3>
+  <input type="range" class="slider" min="0" max="7" value="0" id="conflict-initiation-slider">
+  <label for="conflict-initiation-slider">Conflict Initiation</label>
+  
+  <input type="range" class="slider" min="0" max="7" value="0" id="conflict-buildup-slider">
+  <label for="conflict-buildup-slider">Conflict Buildup</label>
+  
+  <h3>Impact on Future Storylines (40%)</h3>
+  <input type="range" class="slider" min="0" max="7" value="0" id="future-storylines-slider">
+  <label for="future-storylines-slider">Impact on Future Storylines</label>
+  
+  <h2>Attention and Discussion (15%)</h2>
+  
+  <input type="range" class="slider" min="0" max="7" value="0" id="pre-match-anticipation-slider">
+  <label for="pre-match-anticipation-slider">Pre-match Anticipation</label>
+  
+  <input type="range" class="slider" min="0" max="7" value="0" id="pre-match-discussion-slider">
+  <label for="pre-match-discussion-slider">Pre-match Discussion</label>
+  
+  <input type="range" class="slider" min="0" max="7" value="0" id="suspense-slider">
+  <label for="suspense-slider">Suspense</label>
+  
+  <input type="range" class="slider" min="0" max="7" value="0" id="post-match-discussion-slider">
+  <label for="post-match-discussion-slider">Post-match Discussion</label>
+  
+  <h2>Significance (25%)</h2>
+  
+  <input type="range" class="slider" min="0" max="7" value="0" id="influence-on-rivalries-slider">
+  <label for="influence-on-rivalries-slider">Influence on Rivalries</label>
+  
+  <input type="range" class="slider" min="0" max="7" value="0" id="championship-impact-slider">
+  <label for="championship-impact-slider">Impact on Championship Changes/Defenses</label>
+  
+  <input type="range" class="slider" min="0" max="7" value="0" id="storyline-progression-slider">
+  <label for="storyline-progression-slider">Impact on Storyline Progression</label>
+  
+  <h2>Special Match Formats (OPTIONAL)</h2>
+  
+  <input type="range" class="slider" min="0" max="7" value="0" id="necessity-slider">
+  <label for="necessity-slider">Necessity</label>
+  
+  <input type="range" class="slider" min="0" max="7" value="0" id="presentation-effectiveness-slider">
+  <label for="presentation-effectiveness-slider">Presentation Effectiveness</label>
+  
+  <script>
+    const sliders = document.getElementsByClassName("slider");
+    const totalScoreElement = document.getElementById("total-score");
+    
+    Array.from(sliders).forEach(slider => {
+      slider.addEventListener("input", () => {
+        calculateTotalScore();
+      });
+    });
+    
+    function calculateTotalScore() {
+      let totalScore = 0;
+      
+      const inMatchEvaluationWeight = 0.35;
+      const atmosphereWeight = 0.6;
+      const movesWeight = 0.4;
+      
+      const storylineEvaluationWeight = 0.25;
+      const preMatchBuildupWeight = 0.6;
+      const impactOnFutureStorylinesWeight = 0.4;
+      
+      const attentionAndDiscussionWeight = 0.15;
+      const significanceWeight = 0.25;
+      const specialMatchFormatsWeight = 0; // Optional, set the weight as desired
+      
+      // Calculate In-match Evaluation score
+      const atmosphereScore = atmosphereWeight * (parseFloat(document.getElementById("audience-engagement-slider").value) +
+          parseFloat(document.getElementById("pace-control-slider").value) +
+          parseFloat(document.getElementById("selling-immersion-slider").value) +
+          parseFloat(document.getElementById("entertainment-value-slider").value)) / 4;
+      
+      const movesScore = movesWeight * (parseFloat(document.getElementById("number-of-mistakes-slider").value) +
+          parseFloat(document.getElementById("chemistry-slider").value) +
+          parseFloat(document.getElementById("high-points-slider").value) +
+          parseFloat(document.getElementById("gimmicks-slider").value)) / 4;
+      
+      const inMatchEvaluationScore = inMatchEvaluationWeight * (atmosphereScore + movesScore);
+      
+      // Calculate Storyline Evaluation score
+      const preMatchBuildupScore = preMatchBuildupWeight * (parseFloat(document.getElementById("conflict-initiation-slider").value) +
+          parseFloat(document.getElementById("conflict-buildup-slider").value)) / 2;
+      
+      const storylineEvaluationScore = storylineEvaluationWeight * (preMatchBuildupScore +
+          impactOnFutureStorylinesWeight * parseFloat(document.getElementById("future-storylines-slider").value));
+      
+      // Calculate Attention and Discussion score
+      const attentionAndDiscussionScore = attentionAndDiscussionWeight * (parseFloat(document.getElementById("pre-match-anticipation-slider").value) +
+          parseFloat(document.getElementById("pre-match-discussion-slider").value) +
+          parseFloat(document.getElementById("suspense-slider").value) +
+          parseFloat(document.getElementById("post-match-discussion-slider").value)) / 4;
+      
+      // Calculate Significance score
+      const significanceScore = significanceWeight * (parseFloat(document.getElementById("influence-on-rivalries-slider").value) +
+          parseFloat(document.getElementById("championship-impact-slider").value) +
+          parseFloat(document.getElementById("storyline-progression-slider").value)) / 3;
+      
+      // Calculate Special Match Formats score (optional)
+      const specialMatchFormatsScore = specialMatchFormatsWeight * (parseFloat(document.getElementById("necessity-slider").value) +
+          parseFloat(document.getElementById("presentation-effectiveness-slider").value)) / 2;
+      
+      // Calculate Total Score
+      totalScore = inMatchEvaluationScore + storylineEvaluationScore + attentionAndDiscussionScore + significanceScore + specialMatchFormatsScore;
+      
+      totalScoreElement.innerHTML = "Total Score: " + totalScore.toFixed(2);
+    }
+  </script>
+  
+  <h2 id="total-score">Total Score: 0.00</h2>
+</body>
+</html>
